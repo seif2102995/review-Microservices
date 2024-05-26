@@ -22,7 +22,7 @@ public class FeedbackController {
     FeedbackRepository feedbackRepository;
     
       @GetMapping("")
-    public ResponseEntity getUsers(){
+    public ResponseEntity getFeedbacks(){
         List<Feedback> feedbacks= this.feedbackRepository.findAll(); 
         return new ResponseEntity(feedbacks, HttpStatus.OK);
     }
