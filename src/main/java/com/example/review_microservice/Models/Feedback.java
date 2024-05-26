@@ -5,6 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
+
+import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 @Entity
@@ -13,7 +18,7 @@ public class Feedback {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "feedback", nullable = false)
+    @Column(name = "feedback", nullable = true)
     private String comments;
 
     @Column(name = "rating", nullable = false)
@@ -22,15 +27,21 @@ public class Feedback {
     @Column(name = "mail", nullable = false)
     private String mail;
 
+    @Column(name = "date", nullable = true)
+    private LocalDateTime date;
+
+    @Transient
+    private String formattedDate;
 
     public Feedback() {
     }
 
-    public Feedback(int id, String comments, int rating, String mail) {
+    public Feedback(int id, String comments, int rating, String mail, LocalDateTime date) {
         this.id = id;
         this.comments = comments;
         this.rating = rating;
         this.mail = mail;
+        this.date = date;
     }
 
     public int getId() {
@@ -65,6 +76,14 @@ public class Feedback {
         this.mail = mail;
     }
 
+    public LocalDateTime getDate() {
+        return this.date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
     public Feedback id(int id) {
         setId(id);
         return this;
@@ -85,6 +104,11 @@ public class Feedback {
         return this;
     }
 
+    public Feedback date(LocalDateTime date) {
+        setDate(date);
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == this)
@@ -93,12 +117,12 @@ public class Feedback {
             return false;
         }
         Feedback feedback = (Feedback) o;
-        return id == feedback.id && Objects.equals(comments, feedback.comments) && rating == feedback.rating && Objects.equals(mail, feedback.mail);
+        return id == feedback.id && Objects.equals(comments, feedback.comments) && rating == feedback.rating && Objects.equals(mail, feedback.mail) && Objects.equals(date, feedback.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, comments, rating, mail);
+        return Objects.hash(id, comments, rating, mail, date);
     }
 
     @Override
@@ -108,7 +132,16 @@ public class Feedback {
             ", comments='" + getComments() + "'" +
             ", rating='" + getRating() + "'" +
             ", mail='" + getMail() + "'" +
+            ", date='" + getDate() + "'" +
             "}";
     }
+    // public String getFormattedDate() {
+    //     return formattedDate;
+    // }
+
+    // public void setFormattedDate(String formattedDate) {
+    //     this.formattedDate = formattedDate;
+    // }
+   
    
 }
