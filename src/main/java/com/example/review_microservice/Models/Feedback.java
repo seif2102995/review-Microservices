@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Transient;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
@@ -28,15 +28,13 @@ public class Feedback {
     private String mail;
 
     @Column(name = "date", nullable = true)
-    private LocalDateTime date;
+    private LocalDate date;
 
-    @Transient
-    private String formattedDate;
 
     public Feedback() {
     }
 
-    public Feedback(int id, String comments, int rating, String mail, LocalDateTime date) {
+    public Feedback(int id, String comments, int rating, String mail, LocalDate date) {
         this.id = id;
         this.comments = comments;
         this.rating = rating;
@@ -76,11 +74,11 @@ public class Feedback {
         this.mail = mail;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return this.date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -104,7 +102,7 @@ public class Feedback {
         return this;
     }
 
-    public Feedback date(LocalDateTime date) {
+    public Feedback date(LocalDate date) {
         setDate(date);
         return this;
     }

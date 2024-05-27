@@ -1,7 +1,7 @@
 package com.example.review_microservice.Controllers;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -37,12 +37,19 @@ public class FeedbackController {
         feedback.setComments(body.get("comments")); 
         feedback.setMail(body.get("mail"));
         int rate = Integer.parseInt(body.get("rating"));
-        feedback.setDate(LocalDateTime.now()); 
+        feedback.setDate(LocalDate.now()); 
         feedback.setRating(rate);
         this.feedbackRepository.save(feedback); 
         System.out.println(body);
         return new ResponseEntity(feedback, HttpStatus.CREATED);
     }
 
+    @PostMapping("/delete")
+    public ResponseEntity<Void> deleteFeedback(@RequestBody Map<String, Integer> body) {
+        System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%###########################################" + body);
+        int id = body.get("id");
+        feedbackRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 }
